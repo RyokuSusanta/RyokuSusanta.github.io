@@ -28,7 +28,7 @@ nav {
 .hero__terminal {
   width: 40%;
   margin: -11rem auto 3rem auto;
-  text-align: left;
+  /* text-align: left; */
   color: white;
   padding: 0 1rem;
   border-radius: 4px;

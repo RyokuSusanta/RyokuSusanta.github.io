@@ -14,7 +14,7 @@
   <body>
     <div class="doc__bg"></div>
     <nav class="header">
-      <h1 class="logo">SDK<span class="logo__thin">Documentation</span></h1>
+      <h1 class="logo">SDK <span class="logo__thin"> Documentation</span></h1>
       <ul class="menu">
         <div class="menu__item toggle"><span></span></div>
         <li class="menu__item"><a href="" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
@@ -24,13 +24,28 @@
     <div class="wrapper">
       <aside class="doc__nav">
         <ul>
-          <li class="js-btn selected"> Class WorldGenerator</li>
+          <li class="js-btn selected">Tutorial</li>
+          <li class="js-btn">Class WorldGenerator</li>
           <li class="js-btn">Class Tile</li>
           <li class="js-btn">Class UserStruct</li>
           <li class="js-btn">Class GenerationObject</li>
         </ul>
       </aside>
       <article class="doc__content">
+        <section class="js-section">
+          <h3 class="section__title">Tutorial or Getting Started</h3>
+          <p>
+            Generating The World is relatively simply. First you need to setup the WorldMatrix system. by providing a collection
+            of tile textures as well as the appropriate layers those textures can occupy. Each layer is tiered in array, defining the vertical positions a given layer can occupy
+          </p>
+          <p>
+            After you've finished defining the world matrix you can then call <code>generateWorld()</code> to generate the world. Including any additional customization such as presets
+            and objects. 
+          </p>
+          <p>Look at the following picture down below for the code example on how-to generating the world.</p>
+          <img src="ExpCode.png" alt="Code Example" style="width:450px;height:300px;"></img>
+          <hr />
+        </section>
         <section class="js-section">
           <h3 class="section__title">Class WorldGenerator</h3>
           <p>WorldGenerator class is the core class that provides most generation functionality</p>
