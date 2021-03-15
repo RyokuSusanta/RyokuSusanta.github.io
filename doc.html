@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Procedural Terrain Generation SDK API</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="scribbler-global.css">
+    <link rel="stylesheet" href="scribbler-doc.css">
+    <link rel="author" href="humans.txt">
+  </head>
+  <body>
+    <div class="doc__bg"></div>
+    <nav class="header">
+      <h1 class="logo">SDK<span class="logo__thin">Documentation</span></h1>
+      <ul class="menu">
+        <div class="menu__item toggle"><span></span></div>
+        <li class="menu__item"><a href="" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
+        <li class="menu__item"><a href="index.html" class="link link--dark"><i class="fa fa-home"></i> Home</a></li>
+      </ul>
+    </nav>
+    <div class="wrapper">
+      <aside class="doc__nav">
+        <ul>
+          <li class="js-btn selected"> Class WorldGenerator</li>
+          <li class="js-btn">Class Tile</li>
+          <li class="js-btn">Class UserStruct</li>
+          <li class="js-btn">Class GenerationObject</li>
+        </ul>
+      </aside>
+      <article class="doc__content">
+        <section class="js-section">
+          <h3 class="section__title">Class WorldGenerator</h3>
+          <p>WorldGenerator class is the core class that provides most generation functionality</p>
+          <h3 class="section__title"><code>WorldMatrix(layers, layersTiers, tiers, tilePosition, tileSize)</code></h3>
+          <p>
+            The layers variable/param holds the texture arrays, needs to be ordered the 
+            same as other arrays. The bottom layer is the first element and the top layer is in 
+            the last element.
+          </p>
+          <p>
+            The layerTiers param holds an array of numbers, from 0 to 4, which represents a 
+            tier value to a layer at the same index.
+          </p>
+          <p>
+            tier should be an array of arrays, with a fixed length of 5. each array
+            inside tier should be a series of 2 numbers [lower bound, upper bound]. Each
+            bound signifies the minimum height of element of that tier and the maximum
+            height respectively. Example:
+            tier = [ [0, 1],
+                       [2, 8],
+                       [3, 6],
+                       [5, 10],
+                       [0, 100] ];
+            keep in mind the tiers will be considered in order [1, 2, 3, 4, 5]
+          </p>
+          <p>
+            The tilePosition determines the starting position of where the object will generate 
+            The world.
+          </p>
+          <p>
+            The tileSize determines the size of every tile in the world matrix. The proportions 
+            are not limited to square figures but also rectangular ones.
+          </p>
+        
+          <h3 class="section__title"><code>getMatrix()</code></h3>
+          <p>
+            Returns an array of arrays which hold tile objects, with the complete array representing the world
+          </p>
+          <h3 class="section__title"><code>setMatrix(matrix)</code></h3>
+          <p>
+            Replaces the current world with a passed in one. Usage is mainly in testing edge cases
+          </p>
+          <h3 class="section__title"><code>getLayers()</code></h3>
+          <p>
+            Returns the array of layers in their current order. If randomized beforehand, it will return the randomized array.
+          </p>
+          <h3 class="section__title"><code>setLayers(arrOfLayers)</code></h3>
+          <p>
+            Sets the array of layers to the passed in array, staying true to the order of the passed in arrays
+          </p>
+          <h3 class="section__title"><code>getLayersTiers()</code></h3>
+          <p>
+            Returns the array of tiers while directly correspond to the layers, even after randomization.
+          </p>
+          <h3 class="section__title"><code>setLayersTiers(arrOfLayerTiers)</code></h3>
+          <p>
+            Sets the current array of layer tiers to the passed in version, staying true to the order it was passed in as.
+          </p>
+          <h3 class="section__title"><code>getTiers()</code></h3>
+          <p>
+            This will return the array of tiers, which itself is an array of bounds.
+          </p>
+          <h3 class="section__title"><code>setTiers(tiers)</code></h3>
+          <p>
+            This will set the current tier list with another passed in version. This will not affect any already created worlds but will affect future worlds
+          </p>
+          <h3 class="section__title"><code>setSeed()</code></h3>
+          <p>
+            Sets the seed for the mersenne twister seed generator. Accepts integers only.
+          </p>
+          <h3 class="section__title"><code>draw(cam, indexX1, indexY1, indexX2, indexY2)</code></h3>
+          <p>
+            Draw the world matrix, element by element, to the element according to the set indexes on the parameters.
+          </p>
+          <h3 class="section__title"><code>drawInfinite()</code></h3>
+          <p>
+            Draws the world matrix without a defined set of bounds; useful for something like an infinitely generating world.
+          </p>
+          <h3 class="section__title"><code>randomizeLayers()</code></h3>
+          <p>
+            Will randomize the orders of the layers of the WorldMatrix object
+          </p>
+          <h3 class="section__title"><code>generateWorld(numOfColumns, height)</code></h3>
+          <p>
+            Will pseudo randomly generate the world based on the determined 
+            parameters set. numOfColumns determines how many column arrays of the World matrix will be generated (Width of the world). And the height
+	          parameter determines the height limit as the world will generate upwards 
+	          based on the defined starting tile position field
+          </p>
+          <h3 class="section__title"><code>attemptObjGeneration(colNumber)</code></h3>
+          <p>
+            Attempts to generate the objects given in the generationObject field on
+	          a given column number.
+          </p>
+          <h3 class="section__title"><code>addColumn(index, xPos, startY, height)</code></h3>
+          <p>
+            Adds more column to the world matrix on a given index, and requires xPos 
+	          and startY for the tile position and the maximum height. The function is 
+	          useful for world matrix size management.
+          </p>
+          <h3 class="section__title"><code>removeColumn(columnNum)</code></h3>
+          <p>
+            Removes a column/array of the world matrix on a given columnNum. Useful 
+            for world matrix size management.
+          </p>
+          <h3 class="section__title"><code>smoothTerrain()</code></h3>
+          <p>
+            Will either add a tile or delete a tile if two adjacent columns are more than
+	          one block apart in height. To reduce the spiky-ness of the generated terrain.
+          </p>
+          <h3 class="section__title"><code>addGenerationObj(texture, size, generationRate)</code></h3>
+          <p>
+            Add an object for the world generator to include in its generation. Requires
+            the texture of the object and the size and also the generation rate between 
+            0 and 1. Perfect for Adding non-tile or non-block game object.
+          </p>
+          <h3 class="section__title"><code>removeGenerationObj(index)</code></h3>
+          <p>
+            Selectively remove an already generated object in the world. Given an index
+	          which indicates the column or the array the object is located at.
+          </p>
+          <h3 class="section__title"><code>cullGeneratedObj(minX, maxX, minY, maxY)</code></h3>
+          <p>
+            Culls any generated object outside of a given boundary, determined by the parameters.
+          </p>
+          <h3 class="section__title"><code>emptySpaces(tile, horizClearChance, vertClearChance)</code></h3>
+          <p>
+            Helper function to create empty pockets in terrain, starting from the parameter
+	          Tile. Offers a horizontal and vertical clear chance to determine likelihood of Getting emptied as well.
+          </p>
+          <h3 class="section__title"><code>updateNeighbors(tileColIndex,tileRowIndex)</code></h3>
+          <p>
+            Updates the neighbor tiles of a tile at a given column & row index.
+          </p>
+          <h3 class="section__title"><code>getTile(xPos, yPos)</code></h3>
+          <p>
+            Gets or returns a tile based on world coordinates
+          </p>
+          <h3 class="section__title"><code>insertStructure(xRange, yRange, percent, struct)</code></h3>
+          <p>
+            Allows the user to insert user created/defined terrain structures. Given the
+            xRange and yRange of the world matrix. Percentage chance of it appearing 
+            (0 to 100) and also the structure matrix itself.
+          </p>
+          <h3 class="section__title"><code>presetHills(xStart, xEnd, variance)</code></h3>
+          <p>
+            Generates Hills terrain presets, must be called after the generateWorld function
+	          Requires the range of the x coordinates (xStart, and xEnd) and the variance 
+            parameter which determines the maximum height it can generate the hill.
+          </p>
+          <h3 class="section__title"><code>presetPlains(xStart, xEnd, variance) </code></h3>
+          <p>
+            Generates Plains terrain presets, must be called after the generateWorld function
+	          Requires the range of the x coordinates (xStart, and xEnd) and the variance 
+            Parameter which determines the maximum height it can generate the plains.
+          </p>
+          <h3 class="section__title"><code>presetMountains(xStart, xEnd, variance, incr) </code></h3>
+          <p>
+            Generates mountain terrain presets, must be called after the generateWorld 
+            Function. Requires the range of the x coordinates (xStart, and xEnd) and the 
+            Variance parameter which determines the maximum height it can generate the 
+            Mountain. And also an incr parameter which determines how much the distance or long the blocks between incremental height.
+          </p>
+          <h3 class="section__title"><code>presetPlateau(xStart, xEnd, variance, incr) </code></h3>
+          <p>
+            Generates plateau terrain presets, must be called after the generateWorld 
+            Function. Requires the range of the x coordinates (xStart, and xEnd) and the 
+            Variance parameter which determines the maximum height it can generate the 
+            plateau. And also an incr parameter which determines how much the distance or long the blocks between incremental height.
+          </p>
+          <h3 class="section__title"><code>presetValleys(xStart, xEnd, variance, incr) </code></h3>
+          <p>
+            Generates valley terrain presets, must be called after the generateWorld 
+            Function. Requires the range of the x coordinates (xStart, and xEnd) and the 
+            Variance parameter which determines the maximum height it can generate the 
+            valleys. And also an incr parameter which determines how much the distance or long the blocks between incremental depth.
+          </p>
+          <hr />
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">Class Tile</h3>
+          <p>The Foundation of each generated terrain</p>
+          <h3 class="section__title"><code>Tile(textureAsset, posArr, sizeArr)</code></h3>
+          <p>
+            Tile constructor. Takes a string referencing a path to a texture image as its first parameter, a 2-index array defining its (x,y) position as its second parameter, 
+            and a 2-index array defining its (width, height) dimensions as the third parameter. Defines a new tile with the given parameters, as well as a bounding box set according to the position 
+            & size parameters passed to the constructor.
+          </p>
+          <h3 class="section__title"><code>clone()</code></h3>
+          <p>
+            Creates & returns an identical copy of a GenerationObject.
+          </p>
+          <h3 class="section__title"><code>getTextureAsset()</code></h3>
+          <p>
+            Returns the texture belonging to a given Tile object
+          </p>
+          <h3 class="section__title"><code>setTexture(texture)</code></h3>
+          <p>
+            Takes a TextureRenderable object (called “texture”) and sets it as the Tile’s assigned TextureRenderable
+          </p>
+          <h3 class="section__title"><code>getTexture()</code></h3>
+          <p>
+            Returns a reference to the TextureRenderable object assigned to this Tile
+          </p>
+          <h3 class="section__title"><code>setTopNeighbor(tile)</code></h3>
+          <p>
+            Takes a reference to another Tile as a parameter, and assigns that to this Tile’s “topNeighbor” property, defining the parameter Tile as this Tile’s top neighbor.
+          </p>
+          <h3 class="section__title"><code>setBotNeighbor(tile)</code></h3>
+          <p>
+            Takes a reference to another Tile as a parameter, and assigns that to this Tile’s “botNeighbor” property, defining the parameter Tile as this Tile’s bottom neighbor.
+          </p>
+          <h3 class="section__title"><code>setLeftNeighbor(tile)</code></h3>
+          <p>
+            Takes a reference to another Tile as a parameter, and assigns that to this Tile’s “leftNeighbor” property, defining the parameter Tile as this Tile’s left neighbor.
+          </p>
+          <h3 class="section__title"><code>setRightNeighbor(tile)</code></h3>
+          <p>
+            Takes a reference to another Tile as a parameter, and assigns that to this Tile’s “rightNeighbor” property, defining the parameter Tile as this Tile’s right neighbor.
+          </p>
+          <h3 class="section__title"><code>getBound()</code></h3>
+          <p>
+            Returns a reference to this Tile’s bounding box
+          </p>
+          <h3 class="section__title"><code>objCollision(objectBound)</code></h3>
+          <p>
+            Uses the Tile’s bounding box and its built-in intersectsBound() function to determine if a collision has occurred between this tile and the parameter objectBound
+          </p>
+          <hr />
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">Class UserStruct</h3>
+          <p>
+            Allows user-specified terrain structure to be inserted into the generated world.
+          </p>
+          <h3 class="section__title"><code>userStruct(struct)</code></h3>
+          <p>
+            Accepts a user-specified structure matrix filled with tile objects
+          </p>
+          <h3 class="section__title"><code>getStruct()</code></h3>
+          <p>
+            Return the user-specified structure matrix
+          </p>
+          <h3 class="section__title"><code>setStruct(struct)</code></h3>
+          <p>
+            Set the user-specified structure matrix
+          </p>
+          <h3 class="section__title"><code>getSeed()</code></h3>
+          <p>
+            Return the mersenne twister seed generator object
+          </p>
+          <h3 class="section__title"><code>setSeed(seed)</code></h3>
+          <p>
+            Sets the seed for the mersenne twister seed generator. Accepts integers only.
+          </p>
+          <h3 class="section__title"><code>addNoise(min, variance)</code></h3>
+          <p>
+            Adds noise or randomness to the structure. Min param determines the minimum 	
+	          Amount of the noise and the variance is the maximum amount of the noise per 
+            column.
+          </p>
+          <h3 class="section__title"><code>cleanStruct()</code></h3>
+          <p>
+            Cleans the bottom row of the structure matrix.
+          </p>
+          <hr />
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">Class GenerationObject</h3>
+          <p>Allow non-tile object to be inserted inside the generated world</p>
+          <h3 class="section__title"><code>GenerationObject(textureAsset, sizeArr, generationRate)</code></h3>
+          <p>
+            GenerationObject constructor. Takes a string referencing a path to a texture image as its first parameter, 
+            a 2-index array defining its (width, height) dimensions as the second parameter, and a generation rate as its third parameter. 
+            Defines a new GenerationObject with the given texture and size, and maintains the generation rate as a property defining how often it should show up in the world.
+          </p>
+          <h3 class="section__title"><code>clone()</code></h3>
+          <p>
+            Creates & returns an identical copy of a GenerationObject.
+          </p>
+          <h3 class="section__title"><code>getTextureAsset()</code></h3>
+          <p>
+            Access the texture of your chosen object.
+          </p>
+          <h3 class="section__title"><code>getRenderable()</code></h3>
+          <p>
+            Access the TextureRenderable of your chosen object.
+          </p>
+          <h3 class="section__title"><code>setPos(xPos, yPos)</code></h3>
+          <p>
+            Set the position of the object in your world, defined at its center.
+          </p>
+          <p>
+            xPos defines the x-position in world coordinates.
+          </p>
+          <p>
+            yPos defines the y-position in world coordinates.
+          </p>
+          <h3 class="section__title"><code>getPos()</code></h3>
+          <p>
+            Returns the (x,y) world coordinates of your object, defined as the object’s center.
+          </p>
+          <h3 class="section__title"><code>getSize()</code></h3>
+          <p>
+            Returns a 2-element array describing the object’s size. 
+            The first index defines its width, the second defines its height.
+          </p>
+          <h3 class="section__title"><code>addBound(posArr, sizeArr)</code></h3>
+          <p>
+            Allows you to add a bounding box to the object, in order to utilize the functionality of the BoundingBox class with your object.
+          </p>
+          <p>
+            posArr requires a 2-element position array, with the first index being the x-position and the second being the y-position of your desired bounding box.
+          </p>
+          <p>
+            sizeArr requires a 2-element size array, with the first index being the width and the second being the height of your desired bounding box.
+          </p>
+          <h3 class="section__title"><code>getBound()</code></h3>
+          <p>
+            Returns the bounding box of your object. Note that this requires a bounding box to have been defined prior.
+          </p>
+          <h3 class="section__title"><code>getRate()</code></h3>
+          <p>
+            Returns the spawn rate of your object.
+          </p>
+          <h3 class="section__title"><code>objCollision(objBound)</code></h3>
+          <p>
+            A collision detection function. Utilizes the built-in intersectsBound() function within the BoundingBox class to detect whether or not a collision has occurred with the bounding box defined by objBound.
+          </p>
+        </section>
+      </article>
+    </div>
+
+    <footer class="footer">This page design is inspired by free HTML template created exclusively for <a href="https://tympanus.net/codrops/?p=33686" target="_blank" class="link link--light">Codrops</a>.</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="scribbler.js"></script>
+  </body>
+</html>
